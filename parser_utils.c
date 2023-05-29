@@ -6,7 +6,7 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 15:03:36 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/05/29 15:13:30 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/05/29 15:17:29 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,7 @@ char	**ps_getpath(char **envp)
 
 void	ps_free(t_parser *ps)
 {
-	t_list	*exec;
-	t_list	*tmp;
-
-	exec = ps->exec;
-	while (exec)
-	{
-		tmp = exec->next;
-		exec_free(exec->content);
-		free(exec);
-		exec = tmp;
-	}
+	ft_lstclear(&ps->exec, exec_free);
+	ft_arrclear(ps->path);
 	free(ps);
 }

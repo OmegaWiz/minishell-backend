@@ -6,7 +6,7 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 20:56:03 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/05/29 15:11:05 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/05/29 15:18:17 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,11 @@ t_exec		*exec_init(...);
 void		exec_free(t_exec *exec);
 t_fileset	*fileset_init(...);
 void		fileset_free(t_fileset *fileset);
+
+/* *****************************************************************************
+free char **arr
+***************************************************************************** */
+void		ft_cleararr(char **arr);
 
 t_parser	parser(void *toklist);
 int			parser_error(t_parser *ps, ...);
