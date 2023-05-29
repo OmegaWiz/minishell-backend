@@ -6,7 +6,7 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 20:56:03 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/05/28 21:41:29 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/05/29 15:11:05 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,17 @@ typedef enum e_filetype
 	PIPE,
 } t_filetype;
 
+typedef struct s_listcmd
+{
+	char				**cmd;
+	struct s_listcmd	*next;
+}						t_listcmd;
 typedef struct s_fileset
 {
 	char		*name;
 	int			fd;
 	t_filetype	type;
-}			t_fileset;
+}				t_fileset;
 
 typedef struct s_exec
 {
@@ -65,7 +70,7 @@ typedef struct s_exec
 	char	**cmdarr;
 	t_list	*infile;
 	t_list	*outfile;
-}				t_exec;
+}			t_exec;
 
 typedef struct s_parser
 {
@@ -73,10 +78,22 @@ typedef struct s_parser
 	char	**path;
 	t_list	*exec;
 	int		status;
-}				t_parser;
+}			t_parser;
 
+/** parser_utils.c
+/* *****************************************************************************
+initializes the t_parser struct
+***************************************************************************** */
 t_parser	*ps_init(char **envp);
+/* *****************************************************************************
+get PATH from envp
+***************************************************************************** */
+char		**ps_getpath(char **envp)
+/* *****************************************************************************
+free t_parser struct
+***************************************************************************** */
 void		ps_free(t_parser *ps);
+
 t_exec		*exec_init(...);
 void		exec_free(t_exec *exec);
 t_fileset	*fileset_init(...);
