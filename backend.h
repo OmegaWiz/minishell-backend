@@ -6,7 +6,7 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 20:56:03 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/05/30 08:43:07 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/05/30 08:56:17 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,20 @@ typedef enum e_filetype
 	APPEND,
 	PIPE,
 } t_filetype;
+
+typedef enum e_error
+{
+	ARGC_ERROR,
+	PIPE_ERROR,
+	FORK_ERROR,
+	CMD_ERROR,
+	FILE_ERROR,
+	ACCESS_ERROR,
+	OPEN_ERROR,
+	CLOSE_ERROR,
+	EXEC_ERROR,
+	ALLOC_ERROR,
+} t_error;
 
 typedef struct s_listcmd
 {
@@ -129,12 +143,19 @@ free char **arr
 ***************************************************************************** */
 char		**ft_arrclear(char **arr)
 
-t_parser	parser(void *toklist);
-int			parser_error(t_parser *ps, ...);
+/** parser.c
+/* *****************************************************************************
+parses the command line arguments
+***************************************************************************** */
+t_parser	*parser(t_listcmd *cmdlst, char **envp);
+/* *****************************************************************************
+handle the error in parser
+***************************************************************************** */
+int			parser_error(t_parser *ps, char *msg, t_error err, int errnum);
 
 int			executor(t_parser *ps);
 int			exec_free(t_parser *ps);
-int			exec_error(t_parser *ps, ...);
+int			exec_error(t_parser *ps, char *msg, );
 
 void		pipex_close(t_exec *exec, int ignore);
 void		pipex_exec(t_exec *exec, t_parser *ps);
