@@ -1,0 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pseudopipex.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/30 10:05:07 by kkaiyawo          #+#    #+#             */
+/*   Updated: 2023/05/30 10:05:49 by kkaiyawo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "backend.h"
+
+void		pipex_close(t_exec *exec, int ignore);
+
+void		pipex_exec(t_exec *exec, t_parser *ps);
+
+int			pipex_error(t_parser *ps, char *msg, t_error err, int errnum);
