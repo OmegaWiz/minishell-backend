@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   executor_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/28 20:56:41 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/05/30 09:06:47 by kkaiyawo         ###   ########.fr       */
+/*   Created: 2023/05/30 09:52:18 by kkaiyawo          #+#    #+#             */
+/*   Updated: 2023/05/30 09:52:33 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "backend.h"
 
-t_parser	*parser(t_listcmd *lc, char **envp)
+int	executor_free(t_parser *ps)
 {
-	t_parser	*ps;
+	int	status;
 
-	ps = ps_init(envp);
-	return (ps);
+	status = ps->status;
+	ps_free(ps);
+	return (WEXITSTATUS(status));
 }
 
-int	parser_error(t_parser *ps, char *msg, t_error err, int errnum)
+int	executor_error(t_parser *ps, char *msg, t_error err, int errnum)
 {
 	ft_putstr_fd("minishell: ", 2);
 	if (err == CMD_ERROR || err == FILE_ERROR || err == ACCESS_ERROR)

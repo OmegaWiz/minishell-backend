@@ -6,7 +6,7 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 20:56:03 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/05/30 08:56:17 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/05/30 10:03:41 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,12 +153,37 @@ handle the error in parser
 ***************************************************************************** */
 int			parser_error(t_parser *ps, char *msg, t_error err, int errnum);
 
+/** executor.c
+/* *****************************************************************************
+executes the command line arguments
+***************************************************************************** */
 int			executor(t_parser *ps);
-int			exec_free(t_parser *ps);
-int			exec_error(t_parser *ps, char *msg, );
+void		executor_pipe(t_parser *ps);
+void		executor_fork(t_parser *ps);
+void		executor_wait(t_parser *ps);
 
+/** executor_utils.c
+/* *****************************************************************************
+free the t_parser struct and return the status
+***************************************************************************** */
+int			executor_free(t_parser *ps);
+/* *****************************************************************************
+handle the error in executor
+***************************************************************************** */
+int			executor_error(t_parser *ps, char *msg, t_error err, int errnum);
+
+/** pseudopipex.c
+/* *****************************************************************************
+close all the unnecessary fd, leaving ignore'th pipe fd open
+***************************************************************************** */
 void		pipex_close(t_exec *exec, int ignore);
+/* *****************************************************************************
+execute the command line arguments in t_exec
+***************************************************************************** */
 void		pipex_exec(t_exec *exec, t_parser *ps);
-int			pipex_error(t_exec, *exec, t_parser *ps, ...);
+/* *****************************************************************************
+handle the error in pipex
+***************************************************************************** */
+int			pipex_error(t_parser *ps, char *msg, t_error err, int errnum);
 
 #endif

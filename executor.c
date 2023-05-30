@@ -6,7 +6,7 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 21:14:24 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/05/28 21:41:32 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/05/30 09:58:18 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,30 @@
 
 int	executor(t_parser *ps)
 {
+	executor_pipe(ps);
+	executor_fork(ps);
+	pipex_close(ps->exec, -1);
+	executor_wait(ps);
+	return (exec_free(ps));
+}
+
+void	executor_pipe(t_parser *ps)
+{
 	t_list	*exec;
 
 	exec = ps->exec;
 	while (exec->next)
 	{
-		pipe(((t_exec *) (exec->content))->fd); //error
+		if (pipe(((t_exec *) (exec->content))->fd) == -1)
+			executor_error(ps, "pipe", PIPE_ERROR, errno);
 		exec = exec->next;
 	}
+}
+
+void	executor_fork(t_parser *ps)
+{
+	t_list	*exec;
+
 	exec = ps->exec;
 	while (exec)
 	{
@@ -31,21 +47,16 @@ int	executor(t_parser *ps)
 		else
 			exec = exec->next;
 	}
-	pipex_close(ps->exec, -1);
+}
+
+void	executor_wait(t_parser *ps)
+{
+	t_list	*exec;
+
 	exec = ps->exec;
 	while (exec)
 	{
 		waitpid(((t_exec *) (exec->content))->pid, &ps->status, 0);
 		exec = exec->next;
 	}
-	return (exec_free(ps));
-}
-
-int	exec_free(t_parser *ps)
-{
-	int	status;
-
-	status = ps->status;
-	ps_free(ps);
-	return (WEXITSTATUS(status));
 }
