@@ -6,7 +6,7 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 20:56:03 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/05/29 15:18:17 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/05/30 08:19:19 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <sys/errno.h>
 # include <stdlib.h>
 # include <errno.h>
+# include <limits.h>
 
 typedef struct s_list
 {
@@ -65,7 +66,7 @@ typedef struct s_fileset
 typedef struct s_exec
 {
 	int		pid; //change to pid_t in mac
-	int		pipe[2];
+	int		pipefd[2];
 	t_list	*cmdlst;
 	char	**cmdarr;
 	t_list	*infile;
@@ -94,15 +95,27 @@ free t_parser struct
 ***************************************************************************** */
 void		ps_free(t_parser *ps);
 
-t_exec		*exec_init(...);
-void		exec_free(t_exec *exec);
-t_fileset	*fileset_init(...);
-void		fileset_free(t_fileset *fileset);
+/** exec_utils.c
+/* *****************************************************************************
+initializes the t_exec struct
+***************************************************************************** */
+t_exec		*exec_init();
+/* *****************************************************************************
+free t_parser struct
+***************************************************************************** */
+t_exec		*exec_free(t_exec *exec);
+
+t_fileset	*fs_init(char *name, int fd, t_filetype type);
+void		fs_free(t_fileset *fs);
+/* *****************************************************************************
+close fd and set to INT_MIN
+***************************************************************************** */
+void		file_close(int *fd);
 
 /* *****************************************************************************
 free char **arr
 ***************************************************************************** */
-void		ft_cleararr(char **arr);
+void		ft_arrclear(char **arr);
 
 t_parser	parser(void *toklist);
 int			parser_error(t_parser *ps, ...);
