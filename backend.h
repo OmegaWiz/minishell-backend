@@ -6,7 +6,7 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 20:56:03 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/05/30 20:59:10 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/05/31 08:56:06 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <stdlib.h>
 # include <errno.h>
 # include <limits.h>
+# include "get_next_line.h"
 
 typedef struct s_list
 {
