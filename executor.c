@@ -6,14 +6,17 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 21:14:24 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/05/30 09:58:18 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/05/30 16:34:12 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "backend.h"
 
-int	executor(t_parser *ps)
+int	executor(t_listcmd *lc, char **envp)
 {
+	t_parser	*ps;
+//check all function for return val (errno)
+	ps = parser(lc, envp); //check ps error
 	executor_pipe(ps);
 	executor_fork(ps);
 	pipex_close(ps->exec, -1);
