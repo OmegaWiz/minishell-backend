@@ -6,7 +6,7 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 20:56:03 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/06/05 10:21:23 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/06/05 10:50:37 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,6 +206,7 @@ int			executor_error(t_parser *ps, char *msg, t_error err, int errnum);
 execute the command line arguments in t_exec
 **************************************************************************** */
 int			pipex_exec(t_exec *exec, t_parser *ps);
+void	dup_close(int fd[2])
 /* ****************************************************************************
 close all the unnecessary fd, leaving ignore'th pipe fd open
 **************************************************************************** */
