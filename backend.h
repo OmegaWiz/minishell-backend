@@ -6,7 +6,7 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 20:56:03 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/06/05 08:47:43 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/06/05 09:06:34 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,11 @@ void		fs_free(t_fileset *fs);
 /* *****************************************************************************
 check access for all t_fileset in the list, returns the fd of the last t_fileset
 ***************************************************************************** */
-int			fs_checck(t_list *fslst);
+int			fs_check(t_list *fslst);
+/* *****************************************************************************
+close all non-pipe non-std fd in the list that is not intended to leave open
+***************************************************************************** */
+void		fs_close(t_list *fslst, int ignore[2]);
 /* *****************************************************************************
 close fd and set to INT_MIN
 ***************************************************************************** */
@@ -195,7 +199,7 @@ void		pipex_exec(t_exec *exec, t_parser *ps);
 /* ****************************************************************************
 close all the unnecessary fd, leaving ignore'th pipe fd open
 **************************************************************************** */
-void		pipex_close(t_exec *exec, int ignore);
+void		pipex_close(t_parser *ps, int ignore[2]);
 /* ****************************************************************************
 handle the error in pipex
 **************************************************************************** */
