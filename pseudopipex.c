@@ -6,7 +6,7 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 10:05:07 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/06/05 10:52:42 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/06/05 11:45:09 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,10 @@ void	pipex_close(t_parser *ps, int ignore[2])
 		ex = (t_exec *) exec->content;
 		fs_close(ex->infile, ignore);
 		fs_close(ex->outfile, ignore);
-		file_close(&ex->fd[0]);
+		if (ignore[0] != ex->pipefd[0] && ignore[1] != ex->pipefd[0])
+			file_close(&ex->pipefd[0]);
+		if (ignore[0] != ex->pipefd[1] && ignore[1] != ex->pipefd[1])
+			file_close(&ex->pipefd[1]);
 		exec = exec->next;
 	}
 }
