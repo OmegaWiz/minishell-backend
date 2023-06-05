@@ -6,7 +6,7 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 21:14:24 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/06/05 08:45:38 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/06/05 08:51:16 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,25 @@ int	executor(t_listcmd *lc, char **envp)
 	return (status);
 }
 
-void	executor_fork(t_parser *ps)
+int	executor_fork(t_parser *ps)
 {
 	t_list	*exec;
 
 	exec = ps->exec;
 	while (exec)
 	{
-		((t_exec *) (exec->content))->pid = fork(); //error
-		if (((t_exec *) (exec->content))->pid == 0)
+		((t_exec *) (exec->content))->pid = fork();
+		if (((t_exec *) (exec->content))->pid == -1)
+			return (errno);
+		else if (((t_exec *) (exec->content))->pid == 0)
+		{
 			pipex_exec(exec->content, ps);
+			return (errno);
+		}
 		else
 			exec = exec->next;
 	}
+	return (0);
 }
 
 void	executor_wait(t_parser *ps)
