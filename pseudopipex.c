@@ -6,7 +6,7 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 10:05:07 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/06/05 11:45:09 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/06/05 12:41:00 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	pipex_exec(t_exec *exec, t_parser *ps)
 	status = cmd_findpath(exec->cmdarr, ps);
 	if (status != 0)
 		return (status); //error
-	pipex_close(ps, ignore);
 	dup_close(ignore);
 	execve(exec->cmdarr[0], exec->cmdarr, ps->envp);
 }
@@ -45,7 +44,7 @@ void	dup_close(int fd[2])
 	}
 }
 
-void	pipex_close(t_parser *ps, int ignore[2])
+void	pipex_close(t_parser *ps)
 {
 	t_list	*exec;
 	t_exec	*ex;
@@ -54,12 +53,8 @@ void	pipex_close(t_parser *ps, int ignore[2])
 	while (exec)
 	{
 		ex = (t_exec *) exec->content;
-		fs_close(ex->infile, ignore);
-		fs_close(ex->outfile, ignore);
-		if (ignore[0] != ex->pipefd[0] && ignore[1] != ex->pipefd[0])
-			file_close(&ex->pipefd[0]);
-		if (ignore[0] != ex->pipefd[1] && ignore[1] != ex->pipefd[1])
-			file_close(&ex->pipefd[1]);
+		file_close(&ex->pipefd[0]);
+		file_close(&ex->pipefd[1]);
 		exec = exec->next;
 	}
 }

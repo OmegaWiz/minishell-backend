@@ -6,7 +6,7 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 21:14:24 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/06/05 08:57:05 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/06/05 12:41:23 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	executor(t_listcmd *lc, char **envp)
 	status = executor_fork(ps);
 	if (status != 0)
 		return (status); // needs fix when error is done
-	pipex_close(ps, {0, 1});
+	pipex_close(ps);
 	status = executor_wait(ps);
 	ps_free(ps);
 	return (status);
