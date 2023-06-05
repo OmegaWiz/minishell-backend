@@ -6,7 +6,7 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 21:14:24 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/06/05 08:43:00 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/06/05 08:45:38 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ int	executor(t_listcmd *lc, char **envp)
 	ps = parser(lc, envp);
 	if (!ps)
 		return (ENOMEM); // needs fix when error is done
-	status = pipexpp(ps);
+	status = executor_fork(ps);
 	if (status != 0)
 		return (status); // needs fix when error is done
-	pipes_close(ps);
-	status = wait_all(ps);
+	pipes_close(ps, {0, 1});
+	status = executor_wait(ps);
 	ps_free(ps);
 	return (status);
 }
