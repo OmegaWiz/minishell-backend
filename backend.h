@@ -6,7 +6,7 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 20:56:03 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/05/31 08:56:06 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/06/02 14:04:34 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ typedef struct s_fileset
 
 typedef struct s_exec
 {
-	int		pid; //change to pid_t in mac
+	pid_t	pid; //change to pid_t in mac
 	int		pipefd[2];
 	t_list	*cmdlst;
 	char	**cmdarr;
@@ -106,7 +106,7 @@ get PATH from envp
 **************************************************************************** */
 char		**ps_getpath(char **envp);
 /* *****************************************************************************
-free t_parser struct
+free t_exec struct
 ***************************************************************************** */
 t_parser	*ps_free(t_parser *ps);
 
@@ -129,6 +129,10 @@ t_fileset	*fs_init(char *name, int fd, t_filetype type);
 free t_fileset struct
 ***************************************************************************** */
 void		fs_free(t_fileset *fs);
+/* *****************************************************************************
+check access for all t_fileset in the list, returns the fd of the last t_fileset
+***************************************************************************** */
+int			fs_checck(t_list *fslst);
 /* *****************************************************************************
 close fd and set to INT_MIN
 ***************************************************************************** */
