@@ -6,7 +6,7 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 21:14:24 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/06/05 08:40:25 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/06/05 08:43:00 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,6 @@ int	executor(t_listcmd *lc, char **envp)
 	status = wait_all(ps);
 	ps_free(ps);
 	return (status);
-}
-
-void	executor_pipe(t_parser *ps)
-{
-	t_list	*exec;
-
-	exec = ps->exec;
-	while (exec->next)
-	{
-		if (pipe(((t_exec *) (exec->content))->fd) == -1)
-			executor_error(ps, "pipe", PIPE_ERROR, errno);
-		exec = exec->next;
-	}
 }
 
 void	executor_fork(t_parser *ps)
