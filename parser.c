@@ -6,7 +6,7 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 20:56:41 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/05/30 16:37:23 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/06/05 14:40:04 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ t_parser	*parser(t_listcmd *lc, char **envp)
 	ptr = lc;
 	while (ptr)
 	{
-		sz = ft_lstsize(ptr->cmd);
+		sz = ft_lstsize(ps->exec);
 		exec = parse2exec(ptr);
 		if (!exec)
 			parser_error(ps, "malloc", MALLOC_ERROR, errno);
 		ft_lstadd_back(&ps->exec, ft_lstnew(exec));
-		if (sz + 1 != ft_lstsize(ptr->cmd))
+		if (sz + 1 != ft_lstsize(ps->exec))
 			parser_error(ps, "malloc", MALLOC_ERROR, errno);
 		ptr = ptr->next;
 	}
