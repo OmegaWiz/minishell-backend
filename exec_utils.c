@@ -6,7 +6,7 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 15:27:46 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/05/30 08:19:33 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/06/05 11:56:43 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,15 @@ t_exec		*exec_init()
 	if (!exec)
 		return (NULL);
 	exec->pid = INT_MIN;
-	exec->pipefd[0] = INT_MIN;
-	exec->pipefd[1] = INT_MIN;
 	exec->cmdlst = NULL;
 	exec->cmdarr = NULL;
 	exec->infile = NULL;
 	exec->outfile = NULL;
+	if (pipe(exec->pipefd) == -1)
+	{
+		exec_free(exec);
+		return (NULL); //error
+	}
 	return (exec);
 }
 
