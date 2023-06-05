@@ -6,7 +6,7 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 20:56:03 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/06/05 09:18:59 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/06/05 10:21:23 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ typedef struct s_parser
 	int		status;
 }	t_parser;
 
-/** parser_utils.c
+// parser_utils.c
 /* ****************************************************************************
 initializes the t_parser struct
 **************************************************************************** */
@@ -110,7 +110,7 @@ free t_exec struct
 ***************************************************************************** */
 t_parser	*ps_free(t_parser *ps);
 
-/** exec_utils.c
+// exec_utils.c
 /* *****************************************************************************
 initializes the t_exec struct
 ***************************************************************************** */
@@ -120,7 +120,7 @@ free t_parser struct
 ***************************************************************************** */
 t_exec		*exec_free(t_exec *exec);
 
-/** fs_utils.c
+// fs_utils.c
 /* *****************************************************************************
 initializes the t_fileset struct
 ***************************************************************************** */
@@ -139,6 +139,8 @@ int			fs_check(t_list *fslst, int *fd);
 close all non-pipe non-std fd in the list that is not intended to leave open
 ***************************************************************************** */
 void		fs_close(t_list *fslst, int ignore[2]);
+
+// file_utils.c
 /* *****************************************************************************
 close fd and set to INT_MIN
 ***************************************************************************** */
@@ -154,7 +156,13 @@ free char **arr
 ***************************************************************************** */
 char		**ft_arrclear(char **arr);
 
-/** parser.c
+// malloc_utils.c
+/* ****************************************************************************
+free the pointer and return null to the pointer
+**************************************************************************** */
+void		*ft_free(void *ptr);
+
+// parser.c
 /* *****************************************************************************
 parses the command line arguments
 ***************************************************************************** */
@@ -172,7 +180,7 @@ handle the error in parser
 ***************************************************************************** */
 int			parser_error(t_parser *ps, char *msg, t_error err, int errnum);
 
-/** executor.c
+// executor.c
 /* ****************************************************************************
 executes the command line arguments
 **************************************************************************** */
@@ -193,15 +201,11 @@ handle the error in executor
 **************************************************************************** */
 int			executor_error(t_parser *ps, char *msg, t_error err, int errnum);
 
-/** pseudopipex.c
+// pseudopipex.c
 /* ****************************************************************************
 execute the command line arguments in t_exec
 **************************************************************************** */
 int			pipex_exec(t_exec *exec, t_parser *ps);
-/* ****************************************************************************
-find $PATH environment that contains the command
-**************************************************************************** */
-int			cmd_findpath(char **cmd, t_parser *ps);
 /* ****************************************************************************
 close all the unnecessary fd, leaving ignore'th pipe fd open
 **************************************************************************** */
@@ -210,5 +214,13 @@ void		pipex_close(t_parser *ps, int ignore[2]);
 handle the error in pipex
 **************************************************************************** */
 int			pipex_error(t_parser *ps, char *msg, t_error err, int errnum);
+
+// pseudopipex_cmd.c
+/* ****************************************************************************
+find $PATH environment that contains the command
+**************************************************************************** */
+int			cmd_findpath(char **cmd, t_parser *ps);
+int			cmdcheck_path(char **cmd, t_parser *ps);
+int			cmdcheck_notpath(char **cmd, t_parser *ps);
 
 #endif
