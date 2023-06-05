@@ -6,7 +6,7 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 20:56:03 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/06/05 09:06:34 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/06/05 09:18:59 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,9 +130,11 @@ free t_fileset struct
 ***************************************************************************** */
 void		fs_free(t_fileset *fs);
 /* *****************************************************************************
-check access for all t_fileset in the list, returns the fd of the last t_fileset
+check access for all t_fileset in the list
+- return 0 if all access is ok, otherwise return errno
+- set fd to the file descriptor of the last t_fileset in the list
 ***************************************************************************** */
-int			fs_check(t_list *fslst);
+int			fs_check(t_list *fslst, int *fd);
 /* *****************************************************************************
 close all non-pipe non-std fd in the list that is not intended to leave open
 ***************************************************************************** */
@@ -195,7 +197,11 @@ int			executor_error(t_parser *ps, char *msg, t_error err, int errnum);
 /* ****************************************************************************
 execute the command line arguments in t_exec
 **************************************************************************** */
-void		pipex_exec(t_exec *exec, t_parser *ps);
+int			pipex_exec(t_exec *exec, t_parser *ps);
+/* ****************************************************************************
+find $PATH environment that contains the command
+**************************************************************************** */
+int			cmd_findpath(char **cmd, t_parser *ps);
 /* ****************************************************************************
 close all the unnecessary fd, leaving ignore'th pipe fd open
 **************************************************************************** */
