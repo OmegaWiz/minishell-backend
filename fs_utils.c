@@ -6,7 +6,7 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 08:36:36 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/06/05 12:43:47 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/06/05 13:00:01 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,9 @@ int			fs_check(t_list *fslst, int *fd)
 			status = heredoc_open(fs);
 		if (status != 0)
 			break ; //error
-		fslst = ptr->next;
+		if (ptr->next != NULL && fs->fd > 2)
+			file_close(&fs->fd);
+		ptr = ptr->next;
 	}
 	return (status);
 }
