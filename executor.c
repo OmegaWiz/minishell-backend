@@ -6,7 +6,7 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 21:14:24 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/06/05 12:41:23 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/06/07 11:27:03 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,16 @@ int	executor(t_listcmd *lc, char **envp)
 int	executor_fork(t_parser *ps)
 {
 	t_list	*exec;
+	t_exec	*ex;
 
 	exec = ps->exec;
 	while (exec)
 	{
-		((t_exec *) (exec->content))->pid = fork();
-		if (((t_exec *) (exec->content))->pid == -1)
+		ex = exec->content;
+		ex->pid = fork();
+		if (ex->pid == -1)
 			return (errno);
-		else if (((t_exec *) (exec->content))->pid == 0)
+		else if (ex->pid == 0)
 		{
 			pipex_exec(exec->content, ps);
 			return (errno);
@@ -53,12 +55,13 @@ int	executor_fork(t_parser *ps)
 int	executor_wait(t_parser *ps)
 {
 	t_list	*exec;
+	t_exec	*ex;
 	int		status;
 
 	exec = ps->exec;
 	while (exec)
 	{
-		waitpid(((t_exec *) (exec->content))->pid, &status, 0);
+		waitpid(ex->pid, &status, 0);
 		exec = exec->next;
 	}
 	return (status);

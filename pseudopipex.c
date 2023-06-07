@@ -6,7 +6,7 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 10:05:07 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/06/05 12:41:00 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/06/07 11:30:30 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	pipex_exec(t_exec *exec, t_parser *ps)
 {
 	int	ignore[2];
-	int status;
+	int	status;
 
 	status = fs_check(exec->infile, &ignore[0]);
 	if (status != 0)

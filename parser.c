@@ -6,7 +6,7 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 20:56:41 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/06/05 14:48:18 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/06/07 11:34:31 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ t_exec	*parse2exec(t_listcmd *lc) //check malloc error
 	while (lc->cmd[++i])
 	{
 		str = lc->cmd[i];
-		if (ft_strncmp(str, ">>", 3) == 0 || ft_strncmp(str, "<<", 3) == 0 ||
-			ft_strncmp(str, "<", 2) == 0 || ft_strncmp(str, ">", 2) == 0)
+		if (ft_strncmp(str, ">>", 3) == 0 || ft_strncmp(str, "<<", 3) == 0
+			|| ft_strncmp(str, "<", 2) == 0 || ft_strncmp(str, ">", 2) == 0)
 			parse2fs(lc->cmd, i++, exec);
 		else
 			ft_lstadd_back(&exec->cmdlst, ft_lstnew(ft_strdup(str)));
@@ -63,17 +63,25 @@ t_exec	*parse2exec(t_listcmd *lc) //check malloc error
 void	parse2fs(char **str, int i, t_exec *exec)
 {
 	if (ft_strncmp(str[i], "<", 1) == 0)
-		ft_lstadd_back(&exec->infile,
-		 ft_lstnew(fs_init(str[i + 1], INT_MIN, INFILE)));
-	else if (ft_strncmp(str[i], "<<", 2) == 0)
-		ft_lstadd_back(&exec->infile,
-		 ft_lstnew(fs_init(str[i + 1], INT_MIN, HEREDOC)));
-	else if (ft_strncmp(str[i], ">", 1) == 0)
-		ft_lstadd_back(&exec->outfile,
-		 ft_lstnew(fs_init(str[i + 1], INT_MIN, OUTFILE)));
-	else if (ft_strncmp(str[i], ">>", 2) == 0)
-		ft_lstadd_back(&exec->outfile,
-		 ft_lstnew(fs_init(str[i + 1], INT_MIN, APPEND)));
+	{
+		ft_lstadd_back(&exec->infile, ft_strdup(str[i + 1]));
+		ft_lstnew(fs_init(str[i + 1], INT_MIN, INFILE)));
+	}
+	if (ft_strncmp(str[i], "<<", 2) == 0)
+	{
+		ft_lstadd_back(&exec->infile, ft_strdup(str[i + 1]));
+		ft_lstnew(fs_init(str[i + 1], INT_MIN, HEREDOC)));
+	}
+	if (ft_strncmp(str[i], ">", 1) == 0)
+	{
+		ft_lstadd_back(&exec->outfile, ft_strdup(str[i + 1]));
+		ft_lstnew(fs_init(str[i + 1], INT_MIN, OUTFILE)));
+	}
+	if (ft_strncmp(str[i], ">>", 2) == 0)
+	{
+		ft_lstadd_back(&exec->outfile, ft_strdup(str[i + 1]));
+		ft_lstnew(fs_init(str[i + 1], INT_MIN, APPEND)));
+	}
 }
 
 int	parser_error(t_parser *ps, char *msg, t_error err, int errnum)

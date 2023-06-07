@@ -6,13 +6,13 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 15:27:46 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/06/05 11:57:33 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/06/07 11:25:06 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "backend.h"
 
-t_exec		*exec_init()
+t_exec	*exec_init(void)
 {
 	t_exec	*exec;
 
@@ -27,14 +27,11 @@ t_exec		*exec_init()
 	exec->pipefd[0] = INT_MIN;
 	exec->pipefd[1] = INT_MIN;
 	if (pipe(exec->pipefd) == -1)
-	{
-		exec_free(exec);
-		return (NULL); //error
-	}
+		return (exec_free(exec));
 	return (exec);
 }
 
-t_exec		*exec_free(t_exec *exec)
+t_exec	*exec_free(t_exec *exec)
 {
 	if (!exec)
 		return (NULL);

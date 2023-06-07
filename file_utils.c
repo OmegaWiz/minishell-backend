@@ -6,7 +6,7 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 11:50:14 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/06/05 13:18:27 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/06/07 11:27:55 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	file_open(t_fileset *fs)
 			return (1); //Error
 		if (fs->type == APPEND)
 			fs->fd = open(fs->name, O_WRONLY | O_APPEND);
-		else if (fs->type == OUTFILE
+		else if (fs->type == OUTFILE)
 			fs->fd = open(fs->name, O_WRONLY | O_TRUNC);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: kkaiyawo <kkaiyawo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 08:36:36 by kkaiyawo          #+#    #+#             */
-/*   Updated: 2023/06/05 13:00:01 by kkaiyawo         ###   ########.fr       */
+/*   Updated: 2023/06/07 11:35:42 by kkaiyawo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	fs_free(t_fileset *fs)
 	free(fs);
 }
 
-int			fs_check(t_list *fslst, int *fd)
+int	fs_check(t_list *fslst, int *fd)
 {
 	t_fileset	*fs;
 	t_list		*ptr;
@@ -57,7 +57,7 @@ int			fs_check(t_list *fslst, int *fd)
 		else if (fs->type == HEREDOC)
 			status = heredoc_open(fs);
 		if (status != 0)
-			break ; //error
+			return (status); // error
 		if (ptr->next != NULL && fs->fd > 2)
 			file_close(&fs->fd);
 		ptr = ptr->next;
